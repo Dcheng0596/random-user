@@ -6,30 +6,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public users : string = "";
-  public file : any;
+  public users: string = "";           
+  public file: any;
+  public textErrorMsg: string = "";
+
+  private errorMsgs: any = {
+    FILE_UPLOAD: "Error uploading file"
+  };
 
   public onTextSubmit(): void {
     
-  }
+  };
 
+  // Retrieve file from file input if exists
   public onFileChange(event: Event): void {
     let element: HTMLInputElement = event.currentTarget as HTMLInputElement;
     let fileList: FileList | null = element.files;
-    let temp: any;
 
     if (fileList) {
-      temp = fileList[0];
+      this.file = fileList[0];
     }
-
-    
-
-    console.log(this.file);
-    
-    
-  }
+    this.textErrorMsg = this.errorMsgs.FILE_UPLOAD;
+  };
 
   public onFileSubmit(): void {
     
-  }
+  };
 }

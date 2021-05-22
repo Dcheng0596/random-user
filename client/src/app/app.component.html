@@ -8,12 +8,12 @@
         <label for="user-data">Paste your JSON here </label>
         <textarea form="text-form" name="user-data" id="user-data" cols="50" rows="10" (change)="users"></textarea>
         <input type="submit" value="Lets go!" (click)="onTextSubmit()">
-        <div class="text-input-error"></div>
+        <div class="text-input-error">{{textErrorMsg}}</div>
       </div>
       <div>Or</div>
       <div class="upload-input">
         <label for="user-file">Upload your JSON file instead</label>
-        <input type="file" id="user-file" name="user-file" (change)="onFileChange($event)">
+        <input type="file" id="user-file" name="user-file" accept=".json,.txt" (change)="onFileChange($event)">
         <input type="submit" value="Lets go!" (click)="onFileSubmit()">
         <div class="upload-input-error"></div>
       </div>
