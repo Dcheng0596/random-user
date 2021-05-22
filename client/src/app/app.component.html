@@ -1,10 +1,21 @@
 
 <div id="main">    
   <div class="content">
+    <h1 class="title">Random User Statistics Generator</h1>
+    <h3 class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will spit out straight facts</h3>
     <div class="input-container">
-      <div class="title">Random User Statistics Generator</div>
-      <div class="text-form"></div>
-      <div class="upload-form"></div>
+      <div class="text-input">
+        <form id="text-form">
+          <div class="text-form-area">
+            <label for="user-data">Paste your JSON here </label>
+            <textarea form="text-form" name="user-data" id="user-data" cols="50" rows="10"></textarea>
+          </div>
+          <div class="text-form-submit">
+            <input type="submit" value="Lets go!">
+          </div>
+        </form>
+      </div>
+      <div class="upload-input"></div>
     </div>
     <div class="stats-container"></div>
   </div>
