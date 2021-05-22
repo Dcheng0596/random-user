@@ -6,8 +6,8 @@
     <div class="input-container">
       <div class="text-input">
         <label for="user-data">Paste your JSON here </label>
-        <textarea form="text-form" name="user-data" id="user-data" cols="50" rows="10" (change)="users"></textarea>
-        <input type="submit" value="Lets go!" (click)="onTextSubmit()">
+        <textarea form="text-form" name="user-data" id="user-data" cols="50" rows="10" [(ngModel)]="users"></textarea>
+        <input type="submit" value="Lets go!" (click)="onTextSubmit()" [disabled]="users.trim().length == 0">
         <div class="text-input-error">{{textErrorMsg}}</div>
       </div>
       <div>Or</div>
@@ -15,7 +15,7 @@
         <label for="user-file">Upload your JSON file instead</label>
         <input type="file" id="user-file" name="user-file" accept=".json,.txt" (change)="onFileChange($event)">
         <input type="submit" value="Lets go!" (click)="onFileSubmit()">
-        <div class="upload-input-error"></div>
+        <div class="upload-input-error">{{fileErrorMsg}}</div>
       </div>
     </div>
     <div class="stats-container"></div>
