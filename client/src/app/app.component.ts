@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RandomUserStats} from './random-user-stats';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   public fileErrorMsg: string = "";
 
   private allowedExt = ['json', 'txt'];
-  
+
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
     FILE_READ: "Error reading file",
@@ -67,7 +68,7 @@ export class AppComponent {
         return;
       }
 
-      this.calcStats(parsedJSON);      
+      this.calcStats(parsedJSON);     
       return;
 
     } catch (e) {
@@ -90,5 +91,5 @@ export class AppComponent {
   };
 
   private calcStats(jsonObj: object): void {
-  }
+  };
 }
