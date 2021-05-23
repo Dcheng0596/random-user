@@ -14,7 +14,7 @@
       <div class="upload-input">
         <label for="user-file">Upload your JSON file instead</label>
         <input type="file" id="user-file" name="user-file" accept=".json,.txt" (change)="onFileChange($event)">
-        <input type="submit" value="Lets go!" (click)="onFileSubmit()">
+        <input type="submit" value="Lets go!" (click)="onFileSubmit()" [disabled]="!file">
         <div class="upload-input-error">{{fileErrorMsg}}</div>
       </div>
     </div>

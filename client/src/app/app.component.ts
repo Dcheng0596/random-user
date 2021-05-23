@@ -8,15 +8,20 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public users: string = "";           
   public file: any;
+
   public textErrorMsg: string = "";
   public fileErrorMsg: string = "";
 
-
+  private allowedExt = ['json', 'txt'];
+  
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
-    INVALID_JSON: "The JSON you entered is invalid"
+    FILE_READ: "Error reading file",
+    INVALID_JSON: "The JSON you entered is invalid",
+    INVALID_EXT: "Upload a .json or .txt file"
   };
 
+  // Parse and calculate statistics form textarea
   public onTextSubmit(): void {
     let parsedJSON = this.parseJSON(this.users);
 
@@ -36,16 +41,43 @@ export class AppComponent {
 
     if (fileList) {
       this.file = fileList[0];
+      return;
     }
+
     this.fileErrorMsg = this.errorMsgs.FILE_UPLOAD;
+    return;
   };
 
-  public onFileSubmit(): void {
-    
+  // Parse file and calculate statistics 
+  public async onFileSubmit(): Promise<void> {
+    let fileExt = this.file.name.split('.').pop();    
+
+    if(!this.allowedExt.includes(fileExt)) {
+      this.fileErrorMsg = this.errorMsgs.INVALID_EXT;
+      return;
+    }
+
+    // Read and parse file
+    try {
+      let text = await this.file.text();
+      let parsedJSON = this.parseJSON(text);
+
+      if(!parsedJSON) {
+        this.fileErrorMsg = this.errorMsgs.INVALID_JSON;
+        return;
+      }
+
+      this.calcStats(parsedJSON);      
+      return;
+
+    } catch (e) {
+      this.fileErrorMsg = this.errorMsgs.FILE_READ;
+      return;
+    }
   };
 
   // Returns false if invalid JSON, else the parsed JSON
-  private parseJSON (jsonStr: string) {
+  private parseJSON(jsonStr: string) {
     try {
       var res = JSON.parse(jsonStr);
       if (res && typeof res === "object") {
