@@ -73,14 +73,14 @@ export class RandomUserStats {
             throw new ReferenceError("state is not defined");
         }
 
+
+        if(!this.stateMap.has(state)) {
+            this.stateMap.set(state, { people: 0, male: 0, female: 0 });
+        }
         let tracker = this.stateMap.get(state);
 
-        if(!tracker) {
-            this.stateMap.set(state, { people: 0, male: 0, female: 0 });
-        } else {
-            tracker.people++;
-            user.gender == "male" ? tracker.male++ : tracker.female++;
-        }
+        tracker!.people++;
+        user.gender == "male" ? tracker!.male++ : tracker!.female++;
     }
 
     private setAgeGroups(user: any): void {
