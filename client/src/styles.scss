@@ -1,3 +1,7 @@
+$light-color: white;
+$dark-color: #5495DF;
+$text-color: #0D2949;
+
 html, body {
     min-height: 100%
 } 
@@ -5,9 +9,9 @@ html, body {
 
 body {
     font-family: Lato;
-    color: #212121;
+    color: $text-color;
     background-color: white ;
-    background-image: linear-gradient(105deg, white  40%, LightSlateGray 40%);
+    background-image: linear-gradient(105deg, $light-color  40%, $dark-color 40%);
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: left top;
