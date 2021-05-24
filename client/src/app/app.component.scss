@@ -1,6 +1,7 @@
 .stats-container {
     animation: fadein 3s;
     display: flex;
+    flex-wrap: wrap;
 }
 @keyframes fadein {
     from { opacity: 0; }

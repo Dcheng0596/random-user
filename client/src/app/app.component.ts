@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { RandomUserStats, PeopleTracker } from './random-user-stats';
-import 
-{ 
-  genderData, generateGenderData,
-  firstNameData, generateFirstNameData,
-  lastNameData, generateLastNameData
-} from './chart-data';
+import { generateGenderData, generateFirstNameData, generateLastNameData, 
+         generatePeopleStateData, generateMaleStateData, generateFemaleStateData } from './chart-data';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +22,30 @@ export class AppComponent {
   public genderData: any;
   public firstNameData: any;
   public lastNameData: any;
-  view: any = [700, 200];
+  public peopleStateData: any;
+  public maleStateData: any;
+  public femaleStateData: any;
+  pieView: any = [window.innerWidth/3 * .8, 200];
+  pieGridView: any = [window.innerWidth * .9, 400];
   genderScheme = { domain: ['#3659B5', '#ED76BA'] };
-  firstNameScheme = { domain: ['#ADD8E6', '#FAC2A7'] };
-  lastNameScheme = { domain: ['#990000', '#127622'] };
+  nameScheme = { domain: ['#ADD8E6', '#FAC2A7'] };
+  peopleStateScheme = { domain: ['#0C23D8', '#621C84', "#64279F", "#D6DFB9", "#0713EA", "#8880A5", "#2F62CD", "#531790", "#67E37A", "#AF1B2F"] };
 
 
   /* -------------------------------------------------------------------------- */
+
+  /*
+  constructor(){
+    this.test();
+  }
+  private async test() {
+    let response = await fetch("https://randomuser.me/api/?results=1000");
+    let users = await response.json()
+        
+    this.calcStats(users);
+      
+  }
+  */
 
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
@@ -112,12 +125,16 @@ export class AppComponent {
 
   private calcStats(jsonObj: object): void {
     let RUS = new RandomUserStats(jsonObj);
+    const numStates = 10;
     
     try {
       RUS.calculateStatistics();
       this.genderData = generateGenderData(RUS.totalPeople.male, RUS.totalPeople.female);
       this.firstNameData = generateFirstNameData(RUS.firstNameAtoM, RUS.firstNameNtoZ);
       this.lastNameData = generateLastNameData(RUS.lastNameAtoM, RUS.lastNameNtoZ);
+      this.peopleStateData = generatePeopleStateData(RUS.stateMap, numStates);
+      this.maleStateData = generateMaleStateData(RUS.stateMap, numStates);
+      this.femaleStateData = generateFemaleStateData(RUS.stateMap, numStates);
     } catch (e) {
       console.log(e);
       

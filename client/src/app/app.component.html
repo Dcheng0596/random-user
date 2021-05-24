@@ -19,9 +19,12 @@
       </div>
     </div>
     <div class="stats-container">
-      <ngx-charts-advanced-pie-chart *ngIf="genderData" [view]="view" [scheme]="genderScheme" [results]="genderData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="firstNameData" [view]="view" [scheme]="firstNameScheme" [results]="firstNameData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="lastNameData" [view]="view" [scheme]="lastNameScheme" [results]="lastNameData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="genderData" [view]="pieView" [scheme]="genderScheme" [results]="genderData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="firstNameData" [view]="pieView" [scheme]="nameScheme" [results]="firstNameData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="lastNameData" [view]="pieView" [scheme]="nameScheme" [results]="lastNameData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="peopleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="peopleStateData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="maleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="maleStateData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="femaleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="femaleStateData"></ngx-charts-advanced-pie-chart>
     </div>
   </div>
 </div>

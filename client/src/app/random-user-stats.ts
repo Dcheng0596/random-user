@@ -1,5 +1,5 @@
 export interface PeopleTracker {
-    people: number,
+    [people: string]: number,
     male: number,
     female: number
 }
@@ -25,9 +25,8 @@ export class RandomUserStats {
     public lastNameAtoM: number = 0; 
     public lastNameNtoZ: number = 0;
 
-
     // Stores the number people in each state and their genders
-    private stateMap: Map<string, PeopleTracker>;
+    public stateMap: Map<string, PeopleTracker>;
     
     constructor(users: any = {}) {
         this.users = users;
