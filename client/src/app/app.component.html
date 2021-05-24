@@ -18,7 +18,15 @@
         <div class="upload-input-error">{{fileErrorMsg}}</div>
       </div>
     </div>
-    <div class="stats-container"></div>
+    <div class="stats-container">
+      <ngx-charts-advanced-pie-chart
+          *ngIf="genderData"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="genderData"
+      >
+      </ngx-charts-advanced-pie-chart>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>

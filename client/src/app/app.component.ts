@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RandomUserStats} from './random-user-stats';
+import { RandomUserStats, PeopleTracker } from './random-user-stats';
+import { genderData, generateGenderData } from './chart-data';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,22 @@ export class AppComponent {
 
   private allowedExt = ['json', 'txt'];
 
+  /* ------------------------------ Chart options ------------------------------ */
+
+  public genderData: any;
+  view: any = [700, 200];
+  colorScheme = {
+    domain: ['#3659B5', '#ED76BA']
+  };
+
+  /* -------------------------------------------------------------------------- */
+
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
     FILE_READ: "Error reading file",
     INVALID_JSON: "The JSON you entered is invalid",
-    INVALID_EXT: "Upload a .json or .txt file"
+    INVALID_EXT: "Upload a .json or .txt file",
+    INVALID_DATA: "The JSON is not valid Random User data"
   };
 
   // Parse and calculate statistics form textarea
@@ -40,7 +52,7 @@ export class AppComponent {
     let element: HTMLInputElement = event.currentTarget as HTMLInputElement;
     let fileList: FileList | null = element.files;
 
-    if (fileList) {
+    if(fileList) {
       this.file = fileList[0];
       return;
     }
@@ -68,7 +80,7 @@ export class AppComponent {
         return;
       }
 
-      this.calcStats(parsedJSON);     
+      this.calcStats(parsedJSON); 
       return;
 
     } catch (e) {
@@ -81,7 +93,7 @@ export class AppComponent {
   private parseJSON(jsonStr: string) {
     try {
       var res = JSON.parse(jsonStr);
-      if (res && typeof res === "object") {
+      if(res && typeof res === "object") {
           return res;
       }
     }
@@ -91,5 +103,15 @@ export class AppComponent {
   };
 
   private calcStats(jsonObj: object): void {
+    let RUS = new RandomUserStats(jsonObj);
+    
+    try {
+      RUS.calculateStatistics();
+      this.genderData = generateGenderData(RUS.totalPeople.male, RUS.totalPeople.female);
+    } catch (e) {
+      console.log(e);
+      
+      this.fileErrorMsg = this.errorMsgs.INVALID_DATA;
+    }
   };
 }

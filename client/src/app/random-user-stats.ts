@@ -1,10 +1,10 @@
-interface PeopleTracker {
+export interface PeopleTracker {
     people: number,
     male: number,
     female: number
 }
 
-interface AgeGroups {
+export interface AgeGroups {
     "0-20": number,
     "21-40": number,
     "41-60": number,
