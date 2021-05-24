@@ -1,5 +1,6 @@
 .stats-container {
     animation: fadein 3s;
+    display: flex;
 }
 @keyframes fadein {
     from { opacity: 0; }

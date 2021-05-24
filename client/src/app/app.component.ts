@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { RandomUserStats, PeopleTracker } from './random-user-stats';
-import { genderData, generateGenderData } from './chart-data';
+import 
+{ 
+  genderData, generateGenderData,
+  firstNameData, generateFirstNameData,
+  lastNameData, generateLastNameData
+} from './chart-data';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +24,13 @@ export class AppComponent {
   /* ------------------------------ Chart options ------------------------------ */
 
   public genderData: any;
+  public firstNameData: any;
+  public lastNameData: any;
   view: any = [700, 200];
-  colorScheme = {
-    domain: ['#3659B5', '#ED76BA']
-  };
+  genderScheme = { domain: ['#3659B5', '#ED76BA'] };
+  firstNameScheme = { domain: ['#ADD8E6', '#FAC2A7'] };
+  lastNameScheme = { domain: ['#990000', '#127622'] };
+
 
   /* -------------------------------------------------------------------------- */
 
@@ -108,6 +116,8 @@ export class AppComponent {
     try {
       RUS.calculateStatistics();
       this.genderData = generateGenderData(RUS.totalPeople.male, RUS.totalPeople.female);
+      this.firstNameData = generateFirstNameData(RUS.firstNameAtoM, RUS.firstNameNtoZ);
+      this.lastNameData = generateLastNameData(RUS.lastNameAtoM, RUS.lastNameNtoZ);
     } catch (e) {
       console.log(e);
       

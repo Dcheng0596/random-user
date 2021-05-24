@@ -19,13 +19,9 @@
       </div>
     </div>
     <div class="stats-container">
-      <ngx-charts-advanced-pie-chart
-          *ngIf="genderData"
-          [view]="view"
-          [scheme]="colorScheme"
-          [results]="genderData"
-      >
-      </ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="genderData" [view]="view" [scheme]="genderScheme" [results]="genderData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="firstNameData" [view]="view" [scheme]="firstNameScheme" [results]="firstNameData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="lastNameData" [view]="view" [scheme]="lastNameScheme" [results]="lastNameData"></ngx-charts-advanced-pie-chart>
     </div>
   </div>
 </div>

@@ -20,6 +20,11 @@ export class RandomUserStats {
 
     public totalPeople: PeopleTracker;
     public ageGroups: AgeGroups;
+    public firstNameAtoM: number = 0;
+    public firstNameNtoZ: number = 0;
+    public lastNameAtoM: number = 0; 
+    public lastNameNtoZ: number = 0;
+
 
     // Stores the number people in each state and their genders
     private stateMap: Map<string, PeopleTracker>;
@@ -40,15 +45,15 @@ export class RandomUserStats {
 
     public calculateStatistics(users: any = this.users) {
         try {
-            if(!users.hasOwnProperty("results")) {
-                throw new ReferenceError("results is not defined");
-            }
-            let results = this.users.results;
+            if(!users.hasOwnProperty("results")) { throw new ReferenceError("results is not defined"); }
+
+            let results: Array<Object>  = this.users.results;
 
             for(let user of results) {
                 this.setTotalTracker(user);
                 this.setStateMap(user);
                 this.setAgeGroups(user);
+                this.setNameStats(user);
             }            
         } catch (e) {
             throw e;     
@@ -56,16 +61,14 @@ export class RandomUserStats {
     }
 
     private setTotalTracker(user: any): void {
-        if(!user.hasOwnProperty("gender")) {
-            throw new ReferenceError("gender is not defined");
-        }
+        if(!user.hasOwnProperty("gender")) { throw new ReferenceError("gender is not defined"); }
 
         this.totalPeople.people++;
         user.gender == "male" ? this.totalPeople.male++ : this.totalPeople.female++;
     }
     
     private setStateMap(user: any): void {
-        let state = user.location.state;
+        let state: string = user.location.state;
         
         if(state == undefined) {
             throw new ReferenceError("state is not defined");
@@ -82,11 +85,9 @@ export class RandomUserStats {
     }
 
     private setAgeGroups(user: any): void {
-        let age = user.dob.age;
+        let age: number = user.dob.age;
 
-        if(age == undefined) {
-            throw new ReferenceError("age is not defined");
-        }
+        if(age == undefined) { throw new ReferenceError("age is not defined"); }
 
         switch(true) {
             case age <= 20:
@@ -107,6 +108,27 @@ export class RandomUserStats {
             default:
                 this.ageGroups["100+"]++;
                 break;
+        }
+    }
+
+    private setNameStats(user: any): void {
+        let firstName: string = user.name.first;
+        let lastName: string = user.name.last;
+
+        if(firstName == undefined) { throw new ReferenceError("first is not defined"); }
+        if(firstName == undefined) { throw new ReferenceError("last is not defined"); }
+        
+        // Compare if first letter of the user's name is in range in ASCII
+        if(firstName.toLowerCase().charCodeAt(0) >= 'a'.charCodeAt(0) && firstName.toLowerCase().charCodeAt(0) <= 'm'.charCodeAt(0)) {
+            this.firstNameAtoM++;
+        } else {
+            this.firstNameNtoZ++;
+        }
+
+        if(lastName.toLowerCase().charCodeAt(0) >= 'a'.charCodeAt(0) && lastName.toLowerCase().charCodeAt(0) <= 'm'.charCodeAt(0)) {
+            this.lastNameAtoM++;
+        } else {
+            this.lastNameNtoZ++;
         }
     }
 }
