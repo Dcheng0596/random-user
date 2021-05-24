@@ -3,7 +3,22 @@ $dark-color: #5495DF;
 $text-color: #0D2949;
 
 html, body {
-    min-height: 100%
+    min-height: 100%;
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #5495DF;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: fade-out(#0D2949, .65);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: fade-out(#0D2949, .8);
+    }
 } 
 
 
@@ -11,9 +26,20 @@ body {
     font-family: Lato;
     color: $text-color;
     background-color: white ;
-    background-image: linear-gradient(105deg, $light-color  40%, $dark-color 40%);
+    background-image: linear-gradient(105deg, $light-color  50%, $dark-color 50%);
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: left top;
     margin:20px
-  }
+    
+}
+
+.stats-container {
+    ::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: fade-out(#0D2949, 1);
+    }
+}

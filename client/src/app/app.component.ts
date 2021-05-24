@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RandomUserStats, PeopleTracker } from './random-user-stats';
 import { generateGenderData, generateFirstNameData, generateLastNameData, 
-         generatePeopleStateData, generateMaleStateData, generateFemaleStateData } from './chart-data';
+         generatePeopleStateData, generateMaleStateData, generateFemaleStateData, 
+         generateAgeGroupsData } from './chart-data';
 
 @Component({
   selector: 'app-root',
@@ -25,16 +26,17 @@ export class AppComponent {
   public peopleStateData: any;
   public maleStateData: any;
   public femaleStateData: any;
+  public ageGroupsData: any;
   pieView: any = [window.innerWidth/3 * .8, 200];
   pieGridView: any = [window.innerWidth * .9, 400];
   genderScheme = { domain: ['#3659B5', '#ED76BA'] };
   nameScheme = { domain: ['#ADD8E6', '#FAC2A7'] };
+  ageScheme = { domain: ['#7A2189', '#D9D562', "#353843", "#EA2C8B", "#015B6B", "#1B73CE"] };
   peopleStateScheme = { domain: ['#0C23D8', '#621C84', "#64279F", "#D6DFB9", "#0713EA", "#8880A5", "#2F62CD", "#531790", "#67E37A", "#AF1B2F"] };
-
 
   /* -------------------------------------------------------------------------- */
 
-  /*
+  
   constructor(){
     this.test();
   }
@@ -42,10 +44,8 @@ export class AppComponent {
     let response = await fetch("https://randomuser.me/api/?results=1000");
     let users = await response.json()
         
-    this.calcStats(users);
-      
+    this.calcStats(users); 
   }
-  */
 
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
@@ -135,9 +135,8 @@ export class AppComponent {
       this.peopleStateData = generatePeopleStateData(RUS.stateMap, numStates);
       this.maleStateData = generateMaleStateData(RUS.stateMap, numStates);
       this.femaleStateData = generateFemaleStateData(RUS.stateMap, numStates);
+      this.ageGroupsData = generateAgeGroupsData(RUS.ageGroups);
     } catch (e) {
-      console.log(e);
-      
       this.fileErrorMsg = this.errorMsgs.INVALID_DATA;
     }
   };

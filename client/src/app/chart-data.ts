@@ -1,4 +1,4 @@
-import { PeopleTracker } from './random-user-stats'
+import { PeopleTracker, AgeGroups } from './random-user-stats'
 
 interface ChartData  {
     "name": string,
@@ -10,7 +10,7 @@ export function generateGenderData(males: number, females: number): Array<ChartD
 
     genderData.push({ "name": "Male", "value": males })
     genderData.push({ "name": "Female", "value": females })
-    return [...genderData]; // return new array to trigger chart rerender
+    return genderData;
 }
 
 export function generateFirstNameData(AtoM: number, NtoZ: number): Array<ChartData> {
@@ -18,7 +18,7 @@ export function generateFirstNameData(AtoM: number, NtoZ: number): Array<ChartDa
 
     firstNameData.push({ "name": "First Name A to M", "value": AtoM })
     firstNameData.push({ "name": "First Name N to Z", "value": NtoZ })
-    return [...firstNameData]; // return new array to trigger chart rerender
+    return firstNameData;
 }
 
 export function generateLastNameData(AtoM: number, NtoZ: number): Array<ChartData> {
@@ -26,10 +26,25 @@ export function generateLastNameData(AtoM: number, NtoZ: number): Array<ChartDat
 
     lastNameData.push({ "name": "First Name A to M", "value": AtoM })
     lastNameData.push({ "name": "First Name N to Z", "value": NtoZ })
-    return [...lastNameData]; // return new array to trigger chart rerender
+    return lastNameData;
 }
 
-export function generatePeopleStateData(stateMap: Map<string, PeopleTracker>, numStates: number): Array<ChartData> {    
+export function generateAgeGroupsData(groups: AgeGroups): Array<ChartData> {
+    let ageGroupsData: Array<ChartData> = [];
+
+    for(let [key, value] of Object.entries(groups)) {
+        ageGroupsData.push({
+            "name": key,
+            "value": value
+        })
+    }
+
+    return ageGroupsData;
+}
+
+// State Functions
+
+export function generatePeopleStateData(stateMap: Map<string, PeopleTracker>, numStates: number): Array<ChartData> {        
     return generateStateData(stateMap, numStates, "people");
 }
 
@@ -37,25 +52,26 @@ export function generateMaleStateData(stateMap: Map<string, PeopleTracker>, numS
     return generateStateData(stateMap, numStates, "male");
 }
 
-
 export function generateFemaleStateData(stateMap: Map<string, PeopleTracker>, numStates: number): Array<ChartData> {    
     return generateStateData(stateMap, numStates, "female");
 }
 
+// Takes a stateMap and sorts it by property name and returns the top numStates in chart data format
 export function generateStateData(stateMap: Map<string, PeopleTracker>, numStates: number, property: string): Array<ChartData> {
     let entries = [...stateMap.entries()];
     
     let sortedEntries = sortStateMapEntries(entries, property);
-    console.log(sortedEntries);
     let peopleStateData: Array<ChartData> = [];
-
-    for(let i = 0; i < numStates; i++) {
+    
+    for(let i = 0; i < Math.min(numStates, sortedEntries.length); i++) {
+        console.log(i);
+        
         peopleStateData.push({
             "name": sortedEntries[i][0],
             "value": sortedEntries[i][1][property]
         })
-    }
-    
+    }        
+
     return peopleStateData;
 }
 

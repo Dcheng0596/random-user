@@ -2,7 +2,7 @@
 <div id="main">    
   <div class="content">
     <h1 class="title">Random User Statistics Generator</h1>
-    <h3 class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will spit out straight facts</h3>
+    <h3 class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will display some nice charts</h3>
     <div class="input-container">
       <div class="text-input">
         <label for="user-data">Paste your JSON here </label>
@@ -25,6 +25,7 @@
       <ngx-charts-advanced-pie-chart *ngIf="peopleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="peopleStateData"></ngx-charts-advanced-pie-chart>
       <ngx-charts-advanced-pie-chart *ngIf="maleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="maleStateData"></ngx-charts-advanced-pie-chart>
       <ngx-charts-advanced-pie-chart *ngIf="femaleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="femaleStateData"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="ageGroupsData" [view]="pieGridView" [scheme]="ageScheme" [results]="ageGroupsData"></ngx-charts-advanced-pie-chart>
     </div>
   </div>
 </div>
