@@ -1,5 +1,7 @@
-
-<div id="main">    
+<div id="main">
+  <div class="generate-button">
+    <button (click)="getRandomUsers()" >Generate Random Users</button>
+  </div>   
   <div class="content">
     <h1 class="title">Random User Statistics Generator</h1>
     <div class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will display some nice charts</div>
@@ -10,10 +12,16 @@
         <input type="submit" value="Lets go!" (click)="onTextSubmit()" [disabled]="users.trim().length == 0">
         <div class="text-input-error">{{textErrorMsg}}</div>
       </div>
-      <div>Or</div>
+      <div class="or">- Or -</div>
       <div class="upload-input">
         <label for="user-file">Upload your JSON file instead</label>
-        <input type="file" id="user-file" name="user-file" accept=".json,.txt" (change)="onFileChange($event)">
+        <div class="upload-area">
+          <label class="file-label">
+            Select File
+            <input type="file" id="user-file" name="user-file" accept=".json,.txt" (change)="onFileChange($event)">
+          </label>
+          <div>{{fileName}}</div>
+        </div>
         <input type="submit" value="Lets go!" (click)="onFileSubmit()" [disabled]="!file">
         <div class="upload-input-error">{{fileErrorMsg}}</div>
       </div>

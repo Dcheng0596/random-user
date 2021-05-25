@@ -19,6 +19,25 @@ html, body {
     ::-webkit-scrollbar-thumb:hover {
         background: fade-out(#0D2949, .8);
     }
+
+    input[type="submit"], .file-label, button {
+        border:none;
+        border-radius: 2px;
+        background-color: $text-color;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        color: #FEAD6F;
+
+        &:hover {
+            background-color: fade-out($color: $text-color, $amount: .3);
+        }
+
+        &:disabled {
+            background-color: fade-out($color: $text-color, $amount: .6);
+        }
+    }
+      
 } 
 
 
@@ -32,7 +51,7 @@ body {
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: left top;
-    margin: 50px 50px;
+    margin: 0 50px;
     
     a {
         color: $text-color;

@@ -1,7 +1,12 @@
 
+$light-color: white;
+$dark-color: #5495DF;
+$text-color: #0D2949;
+
 .title {
     font-size: 50px;
     font-weight: lighter;
+    margin-top: 0;
 }
 
 .description {
@@ -13,7 +18,24 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 50px 0;
+    margin-top: 50px;
+
+    .or {
+        margin: 10px 50px;
+        align-self: center;
+        font-size: 20px;
+    }
+}
+
+.generate-button {
+    position: sticky;
+    top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    button {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
 }
 
 .text-input {
@@ -33,6 +55,35 @@
             width: 100px;
         }
     }
+}
+
+.upload-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .upload-area {
+        display: flex;
+        width: 500px;
+        height: 305px;
+        background-color: fade-out($color: $light-color, $amount: .8);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #user-file {
+            display: none;
+        }
+        
+    }
+    
+    input, label {
+        margin: 1rem;
+        &[type="submit"] {
+            width: 100px;
+        }
+    }
+
 }
 
 .text-input-error, .file-input-error {
@@ -77,7 +128,8 @@
 }
 
 @media screen and (max-width: 1200px) {
-    .state-charts{
+    .state-charts {
         margin-top: 5em;
     }
 }
+

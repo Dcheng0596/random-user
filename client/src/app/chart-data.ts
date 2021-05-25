@@ -24,8 +24,8 @@ export function generateFirstNameData(AtoM: number, NtoZ: number): Array<ChartDa
 export function generateLastNameData(AtoM: number, NtoZ: number): Array<ChartData> {
     let lastNameData: Array<ChartData> = [];
 
-    lastNameData.push({ "name": "First Name A to M", "value": AtoM })
-    lastNameData.push({ "name": "First Name N to Z", "value": NtoZ })
+    lastNameData.push({ "name": "Last Name A to M", "value": AtoM })
+    lastNameData.push({ "name": "Last Name N to Z", "value": NtoZ })
     return lastNameData;
 }
 

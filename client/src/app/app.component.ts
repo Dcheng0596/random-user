@@ -12,6 +12,7 @@ import { generateGenderData, generateFirstNameData, generateLastNameData,
 export class AppComponent {
   public users: string = "";           
   public file: any;
+  public fileName: string = ""
 
   public textErrorMsg: string = "";
   public fileErrorMsg: string = "";
@@ -35,17 +36,6 @@ export class AppComponent {
   peopleStateScheme = { domain: ['#0C23D8', '#621C84', "#64279F", "#D6DFB9", "#0713EA", "#8880A5", "#2F62CD", "#531790", "#67E37A", "#AF1B2F"] };
 
   /* -------------------------------------------------------------------------- */
-
-  
-  constructor(){
-    this.test();
-  }
-  private async test() {
-    let response = await fetch("https://randomuser.me/api/?results=1000");
-    let users = await response.json()
-        
-    this.calcStats(users); 
-  }
 
   private errorMsgs: any = {
     FILE_UPLOAD: "Error uploading file",
@@ -75,6 +65,7 @@ export class AppComponent {
 
     if(fileList) {
       this.file = fileList[0];
+      this.fileName = this.file.name;
       return;
     }
 
@@ -85,7 +76,6 @@ export class AppComponent {
   // Parse file and calculate statistics 
   public async onFileSubmit(): Promise<void> {
     let fileExt = this.file.name.split('.').pop();    
-
     if(!this.allowedExt.includes(fileExt)) {
       this.fileErrorMsg = this.errorMsgs.INVALID_EXT;
       return;
@@ -140,4 +130,12 @@ export class AppComponent {
       this.fileErrorMsg = this.errorMsgs.INVALID_DATA;
     }
   };
+
+  
+  public async getRandomUsers() {
+    let response = await fetch("https://randomuser.me/api/?results=1000");
+    let users = await response.json()
+        
+    this.calcStats(users); 
+  }
 }
