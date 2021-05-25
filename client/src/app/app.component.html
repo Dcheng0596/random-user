@@ -2,7 +2,7 @@
 <div id="main">    
   <div class="content">
     <h1 class="title">Random User Statistics Generator</h1>
-    <h3 class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will display some nice charts</h3>
+    <div class="description">Give us your <a href="https://randomuser.me" target="_blank"> Random User</a> data and we will display some nice charts</div>
     <div class="input-container">
       <div class="text-input">
         <label for="user-data">Paste your JSON here </label>
@@ -18,14 +18,33 @@
         <div class="upload-input-error">{{fileErrorMsg}}</div>
       </div>
     </div>
-    <div class="stats-container">
-      <ngx-charts-advanced-pie-chart *ngIf="genderData" [view]="pieView" [scheme]="genderScheme" [results]="genderData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="firstNameData" [view]="pieView" [scheme]="nameScheme" [results]="firstNameData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="lastNameData" [view]="pieView" [scheme]="nameScheme" [results]="lastNameData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="peopleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="peopleStateData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="maleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="maleStateData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="femaleStateData" [view]="pieGridView" [scheme]="peopleStateScheme" [results]="femaleStateData"></ngx-charts-advanced-pie-chart>
-      <ngx-charts-advanced-pie-chart *ngIf="ageGroupsData" [view]="pieGridView" [scheme]="ageScheme" [results]="ageGroupsData"></ngx-charts-advanced-pie-chart>
+    <div class="stats-container" *ngIf="genderData" >
+      <div class="gender">
+        <h4 class>Gender</h4>
+        <ngx-charts-advanced-pie-chart [view]="pieView" [scheme]="genderScheme" [results]="genderData"></ngx-charts-advanced-pie-chart>
+      </div>
+      <div class="name">
+      <h4>Name</h4>
+        <div class="name-charts">
+          <ngx-charts-advanced-pie-chart [view]="pieView" [scheme]="nameScheme" [results]="firstNameData"></ngx-charts-advanced-pie-chart>
+          <ngx-charts-advanced-pie-chart [view]="pieView" [scheme]="nameScheme" [results]="lastNameData"></ngx-charts-advanced-pie-chart>
+        </div>
+      </div>
+      <div class="state-charts">
+        <h3 class="state-charts-header">Top 10 States by Population</h3>
+        <div>
+          <h4>Total</h4>
+          <ngx-charts-advanced-pie-chart [view]="pieGridView" [scheme]="peopleStateScheme" [results]="peopleStateData"></ngx-charts-advanced-pie-chart>
+          <h4>Male</h4>
+          <ngx-charts-advanced-pie-chart [view]="pieGridView" [scheme]="peopleStateScheme" [results]="maleStateData"></ngx-charts-advanced-pie-chart>
+          <h4>Female</h4>
+          <ngx-charts-advanced-pie-chart [view]="pieGridView" [scheme]="peopleStateScheme" [results]="femaleStateData"></ngx-charts-advanced-pie-chart>
+        </div>
+      </div>
+      <div>
+        <h3 class="age-charts-header">Age Groups</h3>
+        <ngx-charts-advanced-pie-chart *ngIf="ageGroupsData" [view]="pieGridView" [scheme]="ageScheme" [results]="ageGroupsData"></ngx-charts-advanced-pie-chart>
+      </div>
     </div>
   </div>
 </div>

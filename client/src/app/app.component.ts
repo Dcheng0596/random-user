@@ -27,8 +27,8 @@ export class AppComponent {
   public maleStateData: any;
   public femaleStateData: any;
   public ageGroupsData: any;
-  pieView: any = [window.innerWidth/3 * .8, 200];
-  pieGridView: any = [window.innerWidth * .9, 400];
+  pieView: any = [, 200];
+  pieGridView: any = [window.innerWidth * .9, 300];
   genderScheme = { domain: ['#3659B5', '#ED76BA'] };
   nameScheme = { domain: ['#ADD8E6', '#FAC2A7'] };
   ageScheme = { domain: ['#7A2189', '#D9D562', "#353843", "#EA2C8B", "#015B6B", "#1B73CE"] };

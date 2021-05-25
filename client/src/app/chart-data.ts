@@ -64,8 +64,6 @@ export function generateStateData(stateMap: Map<string, PeopleTracker>, numState
     let peopleStateData: Array<ChartData> = [];
     
     for(let i = 0; i < Math.min(numStates, sortedEntries.length); i++) {
-        console.log(i);
-        
         peopleStateData.push({
             "name": sortedEntries[i][0],
             "value": sortedEntries[i][1][property]
