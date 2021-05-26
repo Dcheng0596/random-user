@@ -1,44 +1,42 @@
-import { RandomUserStats } from '../modules/random-user-stats'
-import fetch from 'node-fetch';
+import { RandomUserStats } from '../modules/random-user-stats';
+import { parse } from 'js2xmlparser';
 
-export async function post_stats(req: any, res: any, next: any) {
-
-    let response = await fetch("https://randomuser.me/api/?results=1000");
-    let users = await response.json()
-    
+// Processes Random User data and sends back a response according to the Accept header
+export function post_stats(req: any, res: any, next: any) {
     let fileFormat: string = req.headers.accept;
     let fileExt: string = '.txt'
-    let fileBody;
-    
-    let RUS = new RandomUserStats(users);
+    let fileBody;        
+        
+    let RUS = new RandomUserStats(req.body);
 
     try {        
         RUS.calculateStatistics();
-
+        
         switch(fileFormat) {
             case 'application/json':
                 fileExt = '.json';
-                fileBody = statsToJSON(RUS);
+                fileBody = { stats: statsToJSON(RUS)};
                 break;
             case 'text/xml':
             case 'application/xml':
                 fileExt = '.xml';
+                fileBody = statsToXML(RUS);
+                
                 break;
             case 'text/plain':
             default:
+                fileBody = statsToText(RUS);
                 break;
         }
-
         res.set({
             'Content-Disposition': 'attachment; filename=stats' + fileExt,
             'Content-Type': fileFormat
         })
         res.send(fileBody);
     } catch (error) {
-        res.send(req.body);
+        res.send("Invalid Random User JSON");
     }
 }
-
 
 function statsToJSON(RUS: RandomUserStats): Object {
     let statsJson: any = {};
@@ -66,17 +64,95 @@ function statsToJSON(RUS: RandomUserStats): Object {
     return statsJson;
 }
 
+// Convert stats to JSON then use js2xmlparser to convert to xml
+function statsToXML(RUS: RandomUserStats): string {
+    let jsonData: any = statsToJSON(RUS);
+
+    // Change age groups into valid XML format
+    let xmlAgeGroups = {
+        "_0-20": jsonData.ages["0-20"],
+        "_21-40": jsonData.ages["21-40"],
+        "_41-60": jsonData.ages["41-60"],
+        "_61-80": jsonData.ages["61-80"],
+        "_81-100": jsonData.ages["81-100"],
+        "_gt100": jsonData.ages["100+"],
+    }
+    jsonData.ages = xmlAgeGroups;
+    
+
+    return parse("stats", jsonData, { replaceInvalidChars: true});
+}
+
+function statsToText(RUS: RandomUserStats): string {
+    let text: string = "";
+    let percision: number = 2;
+    let numStates: number = 10;
+
+    /* ------------------------------ Total Statistics ------------------------------ */
+
+    text += "Percentage of male to female: " + 
+    (getPercent(RUS.totalPeople.male, RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+
+    text += "Percentage of first names that start A-M: " + 
+    (getPercent(RUS.firstNameAtoM, RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+
+    text += "Percentage of first names that start N-Z: " + 
+    (getPercent(RUS.firstNameNtoZ, RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+
+    text += "Percentage of last names that start A-M: " + 
+    (getPercent(RUS.lastNameAtoM, RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+
+    text += "Percentage of last names that start N-Z: " + 
+    (getPercent(RUS.lastNameAtoM, RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+
+    /* ------------------------------ State Statistics ------------------------------ */
+
+    let statesByPeople = getStateData(RUS, numStates, "people");
+    let statesByMale = getStateData(RUS, numStates, "male");
+    let statesByFemale = getStateData(RUS, numStates, "female");
+    let state: any;
+
+    text += "\nTop " + numStates + " states by total population percentage\n";
+    for(state of statesByPeople) {
+        text += "\t" + state.state + ": " + (state.percent * 100).toFixed(percision) + '%\n';
+    }
+
+    text += "\nTop " + numStates + " states by male population percentage\n";
+    for(state of statesByMale) {
+        text += "\t" + state.state + ": " + (state.percent * 100).toFixed(percision) + '%\n';
+    }
+
+    text += "\nTop " + numStates + " states by female population percentage\n";
+    for(state of statesByFemale) {
+        text += "\t" + state.state + ": " + (state.percent * 100).toFixed(percision) + '%\n';
+    }
+    
+    /* ------------------------------ Age Statistics ------------------------------ */
+
+    let ageGroup: any = RUS.ageGroups;
+
+    text += "\nAge groups by percentage\n";
+    for(let group in ageGroup) {
+        text += "\t" + group + ": " + (getPercent(ageGroup[group], RUS.totalPeople.people) * 100).toFixed(percision) + '%\n';
+    }
+
+    return text;
+}
+
+
 // Sorts State Map data by property and returns top numStates by percentage
-export function getStateData(RUS: RandomUserStats, numStates: number, property: string): Array<Object> {
+function getStateData(RUS: RandomUserStats, numStates: number, property: string): Array<Object> {
     let entries = [...RUS.stateMap.entries()];
     let sortedEntries = sortStateMapEntries(entries, property);
     let stateData = [];
-
     
     for(let i = 0; i < Math.min(numStates, sortedEntries.length); i++) {
         let numInState: number = sortedEntries[i][1][property];  
         let stateName: string = sortedEntries[i][0];
-        let data = { [stateName]: getPercent(numInState, RUS.totalPeople.people) };
+        let data = { 
+            state: stateName,
+            percent: getPercent(numInState, RUS.totalPeople.people)
+        };
               
         stateData.push(data);
     }        
