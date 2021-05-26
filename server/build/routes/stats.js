@@ -22,5 +22,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const stats = __importStar(require("../controllers/stats"));
 var router = express.Router();
-router.get('/', stats.post_stats);
+router.post('/', stats.post_stats);
 module.exports = router;

@@ -3,6 +3,6 @@ import * as stats from '../controllers/stats'
 
 var router = express.Router();
 
-router.get('/', stats.post_stats);
+router.post('/', stats.post_stats);
 
 module.exports = router;
