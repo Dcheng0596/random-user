@@ -1,5 +1,9 @@
 import { PeopleTracker, AgeGroups } from './random-user-stats'
 
+/*
+   Takes Random User Data and processes it into ChartData form that ngx-charts uses
+*/
+
 interface ChartData  {
     "name": string,
     "value": number
