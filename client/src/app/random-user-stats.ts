@@ -115,7 +115,7 @@ export class RandomUserStats {
         let lastName: string = user.name.last;
 
         if(firstName == undefined) { throw new ReferenceError("first is not defined"); }
-        if(firstName == undefined) { throw new ReferenceError("last is not defined"); }
+        if(lastName == undefined) { throw new ReferenceError("last is not defined"); }
         
         // Compare if first letter of the user's name is in range in ASCII
         if(firstName.toLowerCase().charCodeAt(0) >= 'a'.charCodeAt(0) && firstName.toLowerCase().charCodeAt(0) <= 'm'.charCodeAt(0)) {
